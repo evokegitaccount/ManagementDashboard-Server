@@ -321,7 +321,6 @@ router.post("/getProfileMatchPercentage", VerifyToken, async function (
   req,
   res
 ) {
-  console.log(req.body);
   await foodHelper.getProfileMatchBattery(body).then((response) => {
     res.status(200).send(response);
   });
@@ -344,6 +343,8 @@ router.post("/upload", function (req, res) {
   var exceltojson;
   upload(req, res, function (err) {
     console.log("called multer");
+
+
     if (err) {
       res.json({ error_code: 1, err_desc: err });
       return;
@@ -394,8 +395,11 @@ router.post("/upload", function (req, res) {
                   });
                 });
               } else {
+            
                 const notMatchedHeaderItem = Object.keys(result[0]).filter((allNameObject) => !Object.keys(empHeaders).includes(allNameObject));
-                res.json({ error_code: 1, err_desc: `These are the excel headers items ${notMatchedHeaderItem.toString()} are not matched in DB ` });
+                const matchedHeaderItem =    Object.keys(empHeaders).filter((allNameObject)=> !Object.keys(result[0]).includes(allNameObject));
+                
+                res.json({ error_code: 1, err_desc: `These are the excel headers items' ${notMatchedHeaderItem.toString()} ' are not matched in DB. Please enter headers as '${matchedHeaderItem}' into DB ` });
               }
           } catch (e) {
             console.log(e);
