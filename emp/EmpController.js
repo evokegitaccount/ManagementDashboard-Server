@@ -399,7 +399,8 @@ router.post("/upload", function (req, res) {
                 const notMatchedHeaderItem = Object.keys(result[0]).filter((allNameObject) => !Object.keys(empHeaders).includes(allNameObject));
                 const matchedHeaderItem =    Object.keys(empHeaders).filter((allNameObject)=> !Object.keys(result[0]).includes(allNameObject));
                 
-                res.json({ error_code: 1, err_desc: `These are the excel headers items' ${notMatchedHeaderItem.toString()} ' are not matched in DB. Please enter headers as '${matchedHeaderItem}' into DB ` });
+                res.json({ error_code: 1, err_desc: ` These are the '${notMatchedHeaderItem}'  headers not matching with DB : Please enter headers as '${matchedHeaderItem}' respectively ` });
+  
               }
           } catch (e) {
             console.log(e);
